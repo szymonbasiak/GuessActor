@@ -1,0 +1,114 @@
+<html lang="en">
+<head>
+
+<script>
+// place your images in this array
+var buttonName = {};
+
+var random_images_array = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg'];
+var random_dir_array = ['Adam Darski/', 'Natalia Kulesza/'];
+
+
+
+
+
+
+var getRandomImage = function(imgArr, dirArr) {
+
+    var dir_num = Math.floor( Math.random() * dirArr.length );
+    var dir = dirArr[ dir_num ];
+    buttonName.global_dir = dir;
+
+
+    path = dir; // default path here
+    var num = Math.floor( Math.random() * imgArr.length );
+    var img = imgArr[ num ];
+    var imgStr = '<img src="' + path + img + '" alt = "" style="height: 30%;">';
+    document.write(imgStr); document.close();
+}
+
+
+function setRandomButtonLabel() {
+    document.write("<p>");
+document.write("correct answer = " + buttonName.global_dir);
+
+// Remove item 'seven' from array
+var wrongAnswer = random_dir_array.filter(function(e){return e!==buttonName.global_dir});
+document.write("wrong answer = " + wrongAnswer);
+
+buttonName.button1Label = buttonName.global_dir;
+buttonName.button2Label = wrongAnswer;
+
+}
+
+
+
+
+
+
+</script>
+</head>
+<body>
+
+
+<div>
+    <!-- This script segment displays an image from the array -->
+    <center>
+    <script type="text/javascript">
+    getRandomImage(random_images_array, random_dir_array);
+    setRandomButtonLabel();
+    </script>
+
+    <br><input id="answer1" type="button" value="" onclick="showButton1Label();"></input>
+        <input id="answer2" type="button" value="" onclick="showButton2Label();"></input>
+    <br><br><br><br><button onclick="location.reload();">Reload page</button>
+</div>
+
+
+
+
+<script>
+
+
+// declaring random button
+    var buttonIndexArray = [1, 2];
+    var randomIndex = Math.floor( Math.random() * 2 );
+    var firstButton = buttonIndexArray[randomIndex];
+    var secondButton = buttonIndexArray.filter(function(e){return e!==firstButton});
+
+
+    buttonOne = "answer" + firstButton;
+    buttonTwo = "answer" + secondButton;
+
+//setting button names
+    document.getElementById(buttonOne).innerHTML = buttonName.button1Label;
+    document.getElementById(buttonOne).value = buttonName.button1Label;
+
+    document.getElementById(buttonTwo).innerHTML = buttonName.button2Label;
+    document.getElementById(buttonTwo).value = buttonName.button2Label;
+
+
+
+function showButton1Label() {
+var answer = document.getElementById("answer1").value;
+if (answer === buttonName.global_dir){
+    confirm("OK");
+} else {
+    confirm("ERROR");
+};
+}
+
+function showButton2Label() {
+var answer = document.getElementById("answer2").value;
+if (answer === buttonName.global_dir){
+    confirm("OK");
+} else {
+    confirm("ERROR");
+};
+}
+
+</script>
+
+
+</body>
+</html>

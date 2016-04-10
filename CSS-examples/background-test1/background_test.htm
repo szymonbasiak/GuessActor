@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+	<style type="text/css">
+
+		@keyframes animatedBackground {
+			from { background-position: 0 0; }
+			to { background-position: 100% 0; }
+		}
+
+
+		#animate-area	{
+			width: 100%;
+			height: 400px;
+			background-image: url(bg-clouds.png);
+			background-position: 0px 0px;
+			background-repeat: repeat-x;
+
+			animation: animatedBackground 40s linear infinite;
+		}
+	</style>
+</head>
+<body>
+
+<div id="animate-area"></div>
+
+</body>
+</html>

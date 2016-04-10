@@ -1,0 +1,128 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<script>
+var buttonName = {};                                                                           // empty object for global variables
+var availableImagesArray = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg'];                   // array with image names
+var parentDirectoryForImages = "polish-actors/";                                               // game specific directory
+var availableDirectoriesArray = ["Adam Darski/", "Agata Kulesza/", "Alicja Bachleda-Curuś/", "Andrzej Seweryn/", "Anna Dereszowska/", "Anna Lewandowska/", "Artur Boruc/", "Beata Tyszkiewicz/", "Borys Szyc/", "Czesław Mozil/", "Danuta Stenka/", "Edyta Górniak/", "Ewa Farna/", "Jacek Braciak/", "Jakub Błaszczykowski/", "Janusz Gajos/", "Jan Englert/"];       // array with directory names
+
+
+var getRandomImage = function(allDirectoriesWithImages, allImagesNames) {
+// choose random directory from available
+    var randomNumberForDir = Math.floor( Math.random() * allDirectoriesWithImages.length );    // pick random number (for directory)
+    var chooseDirectoryWithImages = allDirectoriesWithImages[ randomNumberForDir ];            // randomly choose one element of an array
+    buttonName.correct_answer = chooseDirectoryWithImages;                                     // create variable to hold correct actor name
+    fullPath = parentDirectoryForImages + chooseDirectoryWithImages;                           //  directory where the images are placed
+
+// same steps for choosing 1 of 4 random image for chosen directory
+    var randomNumberForImage = Math.floor( Math.random() * allImagesNames.length );            // pick random number (for image) from 1 to 4
+    var oneChosenImage = allImagesNames[randomNumberForImage];                                 // randomly choose one element of an array
+     // html string for placing image
+    var stringForImage = '<img src="' + fullPath + oneChosenImage + '" alt = "" style="height: 30%; position: relative; top: 10px;">';
+    document.write(stringForImage); document.close();                                          // printing image in the document
+}
+
+
+function setRandomButtonLabel() {
+    document.write("<p>" + "correct answer = " + buttonName.correct_answer + "  " + "&nbsp&nbsp&nbsp&nbsp&nbsp"); // just for debug purposes
+    // Remove correct actor name from array to avoid showing it as wrong name
+    var wrongAnswer = availableDirectoriesArray.filter(function(e){return e !== buttonName.correct_answer}); // return: All actors - correct actor
+    document.write("wrong answer = " + wrongAnswer);  // just for debug purposes
+
+
+    var randomNumberForWrongActor = Math.floor( Math.random() * (availableDirectoriesArray.length - 1));    // pick random number for random button order
+    wrongAnswer = wrongAnswer[randomNumberForWrongActor];  // randomly choose one wrong actor from an array
+    document.write("<p>" + "Wrong answer button: &nbsp&nbsp&nbsp" + wrongAnswer);     // just for debug purposes
+
+    buttonName.button1Label = buttonName.correct_answer;  // show Actor name label on 1st button
+    buttonName.button2Label = wrongAnswer;  // show Actor name label on 1st button
+}
+
+
+function checkButton1Answer() {
+    var answer = document.getElementById("answer1").value + "/";
+    if (answer === buttonName.correct_answer){
+        confirm("CORRECT ANSWER!");
+
+    var values = parseInt(localStorage.getItem('points'),10);
+    var values = values + 1;
+    localStorage.setItem('points', values);
+    buttonName.values = localStorage.getItem('points');
+    } else {
+        confirm("WRONG ANSWER");
+    };
+    location.reload();
+}
+
+function checkButton2Answer() {
+    var answer = document.getElementById("answer2").value  + "/";
+    if (answer === buttonName.correct_answer){
+        confirm("CORRECT ANSWER!");
+
+    var values = parseInt(localStorage.getItem('points'),10);
+    var values = values + 1;
+    localStorage.setItem('points', values);
+    buttonName.values = localStorage.getItem('points');
+
+    } else {
+        confirm("WRONG ANSWER");
+    };
+    location.reload();
+}
+
+
+
+function declareRandomButton(){
+// declaring random button
+    var buttonIndexArray = [1, 2];
+    var randomIndex = Math.floor( Math.random() * 2 );
+    var firstButton = buttonIndexArray[randomIndex];
+    var secondButton = buttonIndexArray.filter(function(e){return e!==firstButton});
+    buttonOne = "answer" + firstButton;
+    buttonTwo = "answer" + secondButton;
+}
+
+function setButtonsLabels(){
+document.write("<p>" + buttonName.button1Label);
+    document.getElementById(buttonOne).innerHTML = buttonName.button1Label;
+    document.getElementById(buttonOne).value = buttonName.button1Label.substring(0, buttonName.button1Label.length - 1);
+
+    document.getElementById(buttonTwo).innerHTML = buttonName.button2Label;
+    document.getElementById(buttonTwo).value = buttonName.button2Label.substring(0, buttonName.button2Label.length - 1);
+}
+
+
+function showScore(){
+buttonName.values = localStorage.getItem('points');
+document.write("<center><p><br>TWOJE PUNKCIORY: " + buttonName.values);
+}
+
+
+
+</script>
+
+</head>
+<body>
+    <!-- This section displays actor-image-->
+    <div align="center" style="position: relative;">
+    <script>getRandomImage(availableDirectoriesArray, availableImagesArray);</script>
+</div>
+
+<div align="center">
+    <!-- This section displays buttons and evaluates their functions -->
+    <input id="answer1" type="button" value="" onclick="checkButton1Answer();" style="width: 30%; height: 40px; width: 200px; position: relative; top: 20px;" ></input>
+    <input id="answer2" type="button" value="" onclick="checkButton2Answer();" style="width: 30%; height: 40px; width: 200px; position: relative; top: 20px;"></input>
+    <p><button style="position: relative; top: 10px;" onclick="location.reload();">Reload page</button>
+    <script>
+        declareRandomButton();
+        setRandomButtonLabel();
+        setButtonsLabels();
+        showScore();
+    </script>
+</div>
+
+
+</body>
+</html>

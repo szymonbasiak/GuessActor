@@ -1,0 +1,23 @@
+<html>
+<body>
+<script>
+
+var values = localStorage.getItem('itemKey');
+
+
+
+
+
+var values = parseInt(localStorage.getItem('itemKey'),10);
+   var values = values + 1;
+   localStorage.setItem('itemKey', values);
+
+
+document.write(values);
+
+</script>
+
+<br><br><button onclick="location.reload();">Reload page</button>
+
+</body>
+</html>
